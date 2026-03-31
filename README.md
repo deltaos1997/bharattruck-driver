@@ -1,50 +1,150 @@
-# Welcome to your Expo app 👋
+# 🚛 BharatTruck Driver App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+The driver-facing mobile app for BharatTruck — a two-sided freight booking marketplace that connects truck drivers with shippers across India.
 
-## Get started
+---
 
-1. Install dependencies
+## What This App Does
 
-   ```bash
-   npm install
-   ```
+This is the app used by **truck drivers**. With this app, a driver can:
 
-2. Start the app
+- Register and log in to their driver account
+- Browse all available truck booking jobs
+- See pickup and drop locations, cargo details, and shipper contact
+- Accept jobs with one tap
+- Update trip status — Start Trip, Mark Delivered
+- View all their current and past jobs
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## Tech Stack
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+| Layer | Technology |
+|---|---|
+| Framework | React Native with Expo |
+| Navigation | Expo Router (file-based routing) |
+| HTTP Client | Axios |
+| Local Storage | AsyncStorage |
+| Build System | EAS Build (Expo Application Services) |
+| Backend | BharatTruck Backend API on Railway |
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## Related Repositories
 
-When you're ready, run:
+| Repo | Description |
+|---|---|
+| [bharattruck-backend](https://github.com/deltaos1997/bharattruck-backend) | Node.js + Fastify backend API |
+| [bharattruck-shipper](https://github.com/deltaos1997/bharattruck-shipper) | Shipper mobile app |
+| [bharattruck-driver](https://github.com/deltaos1997/bharattruck-driver) | This repo — driver mobile app |
 
-```bash
-npm run reset-project
+---
+
+## Project Structure
+
+```
+bharattruck-driver/
+├── app/
+│   ├── _layout.tsx          # Root layout — handles auth routing
+│   ├── login.tsx            # Login screen
+│   ├── register.tsx         # Registration screen
+│   └── (tabs)/
+│       ├── _layout.tsx      # Tab layout
+│       └── index.tsx        # Home screen — available jobs + my jobs
+├── src/
+│   ├── context/
+│   │   └── AuthContext.tsx  # Login state management
+│   ├── screens/
+│   │   ├── LoginScreen.tsx
+│   │   ├── RegisterScreen.tsx
+│   │   └── HomeScreen.tsx
+│   └── services/
+│       └── api.ts           # All API calls to the backend
+├── assets/
+│   └── images/              # App icons and splash screen
+├── app.json                 # Expo app configuration
+└── eas.json                 # EAS Build configuration
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Screens
 
-To learn more about developing your project with Expo, look at the following resources:
+| Screen | Description |
+|---|---|
+| Login | Enter email to log in |
+| Register | Create a new driver account with truck details |
+| Home — Available | Browse all pending jobs posted by shippers |
+| Home — My Jobs | View accepted jobs and update trip status |
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+---
 
-## Join the community
+## Trip Status Flow
 
-Join our community of developers creating universal apps.
+```
+pending → accepted → in_progress → completed
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Action | Who | What happens |
+|---|---|---|
+| Accept job | Driver | Status changes from pending to accepted |
+| Start Trip | Driver | Status changes to in_progress, pickup time recorded |
+| Mark Delivered | Driver | Status changes to completed, delivery time recorded |
+
+---
+
+## Getting Started Locally
+
+### Prerequisites
+- Node.js v18 or higher
+- Expo CLI
+- EAS CLI
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/deltaos1997/bharattruck-driver.git
+cd bharattruck-driver
+```
+
+### 2. Install dependencies
+```bash
+npm install
+```
+
+### 3. Run in development
+```bash
+npx expo start
+```
+
+---
+
+## Building the APK
+
+```bash
+eas build --platform android --profile preview
+```
+
+This takes about 10-15 minutes. When done, you get a download link for the APK.
+
+---
+
+## Development Roadmap
+
+- [x] Driver registration with truck details
+- [x] JWT authentication with persistent sessions
+- [x] Browse available jobs
+- [x] Accept bookings with one tap
+- [x] Update trip status — start and complete
+- [x] EAS Build — real Android APK
+- [x] Connected to Railway backend
+- [ ] Real-time GPS location sharing
+- [ ] Push notifications for new jobs
+- [ ] In-app chat with shipper
+- [ ] Earnings dashboard
+- [ ] Rating system after delivery
+
+---
+
+## License
+
+Private — all rights reserved.
